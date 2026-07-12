@@ -49,7 +49,7 @@ def send_tg_message(status_icon, status_text, extra_text=""):
     try:
         r = requests.post(url, json=payload, timeout=10)
         if r.status_code == 200:
-            print("  📩 Telegram 通知发送成功！")
+            print("📩 Telegram 通知发送成功！")
         else:
             print(f"  ⚠️ Telegram 通知发送失败: {r.text}")
     except Exception as e:
