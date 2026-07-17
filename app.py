@@ -9,8 +9,8 @@ import re
 from seleniumbase import SB
 
 # 从环境变量获取账号密码和 TG 配置
-EMAIL_A        = os.environ.get("LUNES_EMAIL_A") or ""     # 登录邮箱
-PASSWORD_A     = os.environ.get("LUNES_PASSWORD_A") or ""  # 登录密码
+EMAIL        = os.environ.get("LUNES_EMAIL") or ""     # 登录邮箱
+PASSWORD     = os.environ.get("LUNES_PASSWORD") or ""  # 登录密码
 TG_CHAT_ID   = os.environ.get("TG_CHAT_ID") or ""      # chat id,可选
 TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN") or ""    # bot token,可选
 
@@ -25,14 +25,14 @@ def send_tg_message(status_icon, status_text, extra_text=""):
     local_time = time.gmtime(time.time() + 8 * 3600)
     current_time_str = time.strftime("%Y-%m-%d %H:%M:%S", local_time)
 
-    if '@' in EMAIL_A:
-        name, domain = EMAIL_A.split('@', 1)
+    if '@' in EMAIL:
+        name, domain = EMAIL.split('@', 1)
         if len(name) > 4:
             masked_email = f"{name[:2]}****{name[-2:]}@{domain}"
         else:
             masked_email = f"{name}@{domain}"
     else:
-        masked_email = EMAIL_A[:2] + '****'
+        masked_email = EMAIL[:2] + '****'
 
     text = (
         f"🇺🇸 Lunes 保活通知\n\n"
@@ -267,11 +267,11 @@ def login(sb) -> bool:
         pass
 
     print(f"📧 填写邮箱...")
-    js_fill_input(sb, 'input[name="email"]', EMAIL_A)
+    js_fill_input(sb, 'input[name="email"]', EMAIL)
     time.sleep(0.3)
     
     print("🔑 填写密码...")
-    js_fill_input(sb, 'input[name="password"]', PASSWORD_A)
+    js_fill_input(sb, 'input[name="password"]', PASSWORD)
     time.sleep(1)
 
     if sb.execute_script(_EXISTS_JS):
